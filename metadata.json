@@ -1,0 +1,8 @@
+{
+  "name": "Health track to configure",
+  "description": "A sophisticated healthcare tracking system for medication adherence and daily health monitoring, featuring AI-powered health analysis using Gemini.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}
