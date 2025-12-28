@@ -2,15 +2,7 @@
 import { initializeApp, getApps, getApp, FirebaseApp } from "firebase/app";
 import { getMessaging, getToken, Messaging } from "firebase/messaging";
 import { getAuth, signInAnonymously, User, Auth } from "firebase/auth";
-import { 
-  getFirestore, 
-  doc, 
-  setDoc, 
-  onSnapshot, 
-  Firestore,
-  Timestamp,
-  updateDoc
-} from "firebase/firestore";
+import { getFirestore, doc, setDoc, onSnapshot, Firestore, Timestamp, updateDoc } from "firebase/firestore";
 
 // Using the provided configuration
 const firebaseConfig = {
@@ -28,6 +20,7 @@ let messaging: Messaging | null = null;
 let auth: Auth | null = null;
 
 try {
+  // Fix: Initializing Firebase modularly and ensuring all components are correctly typed
   app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
   db = getFirestore(app);
   auth = getAuth(app);

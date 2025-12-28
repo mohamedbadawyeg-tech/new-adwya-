@@ -4,6 +4,7 @@ import { AppState, AIAnalysisResult, TimeSlot } from "../types";
 import { SLOT_HOURS } from "../constants";
 
 export const analyzeHealthStatus = async (state: AppState): Promise<AIAnalysisResult> => {
+  // Initialize the Gemini API client with the API key from environment variables
   const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
   
   const report = state.currentReport;
@@ -57,11 +58,12 @@ export const analyzeHealthStatus = async (state: AppState): Promise<AIAnalysisRe
     4. تقديم نصائح وWarnings واضحة.
   `;
 
+  // Fix: Upgraded model to 'gemini-3-pro-preview' for advanced reasoning and increased thinking budget
   const response = await ai.models.generateContent({
-    model: "gemini-3-flash-preview",
+    model: "gemini-3-pro-preview",
     contents: prompt,
     config: {
-      thinkingConfig: { thinkingBudget: 2000 },
+      thinkingConfig: { thinkingBudget: 32768 },
       responseMimeType: "application/json",
       responseSchema: {
         type: Type.OBJECT,
@@ -77,6 +79,7 @@ export const analyzeHealthStatus = async (state: AppState): Promise<AIAnalysisRe
     }
   });
 
+  // Extract text content from the response property directly
   const text = response.text;
   if (!text) throw new Error("AI response was empty");
   
